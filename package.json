@@ -1,0 +1,11 @@
+{
+  "name": "todomvm-nodejs",
+  "description": "todomvc sample for gcloud-node",
+  "version": "0.0.1",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "express": "^4.5.1",
+    "body-parser": "^1.4.3",
+    "gcloud": "^0.4.0"
+  }
+}
