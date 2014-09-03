@@ -23,7 +23,7 @@ app.get('/todos', function(req, res) {
     .hasAncestor(ds.key('TodoList', todoListName));
   ds.runQuery(q, function(err, items) {
     if (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send(err.message);
       return;
     }
@@ -38,7 +38,7 @@ app.get('/todos/:id', function(req, res) {
   var id = req.param('id');
   ds.get(ds.key('TodoList', todoListName, 'Todo', id), function(err, obj) {
     if (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send(err.message);
       return;
     }
@@ -57,7 +57,7 @@ app.post('/todos', function(req, res) {
     data: todo
   }, function(err, key) {
     if (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send(err.message);
       return;
     }
@@ -74,7 +74,7 @@ app.put('/todos/:id', function(req, res) {
     data: todo
   }, function(err, key) {
     if (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send(err.message);
       return;
     }
@@ -87,7 +87,7 @@ app.delete('/todos/:id', function(req, res) {
   var id = req.param('id');
   ds.delete(ds.key('TodoList', todoListName, 'Todo', id), function(err) {
     if (err) {
-      console.error(err)
+      console.error(err);
       res.status(500).send(err.message);
       return;
     }
@@ -103,7 +103,7 @@ app.delete('/todos', function(req, res) {
     t.runQuery(q, function(err, items) {
       if (err) {
         t.rollback(done);
-        console.error(err)
+        console.error(err);
         res.status(500).send(err.message);
         return;
       }     
@@ -113,7 +113,7 @@ app.delete('/todos', function(req, res) {
       t.delete(keys, function(err) {
         if (err) {
           t.rollback(done);
-          console.error(err)
+          console.error(err);
           res.status(500).send(err.message);
           return;
         }
