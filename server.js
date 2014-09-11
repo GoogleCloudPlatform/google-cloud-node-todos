@@ -15,7 +15,9 @@ app.use(bodyParser.json());
 var todoListName = 'default-list';
 
 app.get('/', function(req, res) {
-  res.send(200, 'hello world');
+  res.set('Content-Type', 'text/plain')
+     .status(200)
+     .send('hello world');
 });
 
 app.get('/todos', function(req, res) {
@@ -28,7 +30,7 @@ app.get('/todos', function(req, res) {
       return;
     }
     res.json(items.map(function(obj, i) {
-      obj.data.id = obj.key.path_.pop();
+      obj.data.id = obj.key.path.pop();
       return obj.data;
     }));
   });
@@ -43,15 +45,16 @@ app.get('/todos/:id', function(req, res) {
       return;
     }
     if (!obj) {
-      return res.send(404);
+      return res.status(404).send();
     }
-    obj.data.id = obj.key.path_.pop();
+    obj.data.id = obj.key.path.pop();
     res.json(obj.data);
   });
 });
 
 app.post('/todos', function(req, res) {
   var todo = req.body;
+  todo.done = false;
   ds.save({
     key: ds.key('TodoList', todoListName, 'Todo'),
     data: todo
@@ -61,8 +64,8 @@ app.post('/todos', function(req, res) {
       res.status(500).send(err.message);
       return;
     }
-    todo.id = key.path_.pop();
-    res.json(todo);
+    todo.id = key.path.pop();
+    res.status(201).json(todo);
   });    
 });
 
@@ -91,7 +94,7 @@ app.delete('/todos/:id', function(req, res) {
       res.status(500).send(err.message);
       return;
     }
-    res.send(200);
+    res.status(204).send();
   });
 });
 
@@ -99,7 +102,7 @@ app.delete('/todos', function(req, res) {
   ds.runInTransaction(function(t, done) {
     var q = ds.createQuery('Todo')
       .hasAncestor(ds.key('TodoList', todoListName))
-      .filter('completed =', true);
+      .filter('done =', true);
     t.runQuery(q, function(err, items) {
       if (err) {
         t.rollback(done);
@@ -118,7 +121,7 @@ app.delete('/todos', function(req, res) {
           return;
         }
         done();
-        res.send(200);
+        res.status(204).send()
       });
     });
   });
