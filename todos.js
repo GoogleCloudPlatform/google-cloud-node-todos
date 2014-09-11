@@ -121,7 +121,7 @@ app.delete('/todos', function(req, res) {
           return;
         }
         done();
-        res.status(204).send()
+        res.status(204).send();
       });
     });
   });
