@@ -8,4 +8,4 @@ before_install:
 before_script:
 - npm lint
 env:
-  - DATASET_ID=proppy-mvm-dogfood
+- DATASET_ID=proppy-mvm-dogfood
