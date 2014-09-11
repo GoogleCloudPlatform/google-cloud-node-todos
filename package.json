@@ -9,9 +9,12 @@
     "gcloud": "^0.6.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.2"
+    "jshint": "^2.5.2",
+    "dredd": "^0.3.9",
+    "request": "^2.42.0"
   },
   "scripts": {
-    "lint": "jshint server.js"
+    "lint": "jshint server.js",
+    "test": "dredd todos.apib http://localhost:8080 --hookfiles test_hooks.js"
   }
 }
