@@ -18,4 +18,4 @@ gulp.task('dredd', function(cb) {
   });
 });
 
-gulp.task('test', ['lint', 'dredd']);
+gulp.task('test', ['dredd']);
