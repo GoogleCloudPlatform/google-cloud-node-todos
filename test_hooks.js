@@ -1,4 +1,5 @@
 var request = require('request');
+// imports the hooks module _injected_ by dredd.
 var hooks = require('hooks');
 
 hooks.before('Todos > Todo > Get a Todo', function(transaction, done) {
