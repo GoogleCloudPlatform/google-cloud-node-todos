@@ -1,6 +1,8 @@
 gcloud-node-todos
 =================
 
+[![Build Status](https://travis-ci.org/proppy/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/proppy/gcloud-node-todos)
+
 TodoMVC backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
 
 # API
