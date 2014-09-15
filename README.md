@@ -31,10 +31,10 @@ TodoMVC backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node
 
         curl -X DELETE http://localhost:8080/todos
 
-# Pre-requisites
+# Prerequisites
 
   - Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
-  - Enable [Google Cloud Datastore API](https://developers.google.com/datastore)
+  - [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
   - Create a new service account and copy the `JSON` credentials to `key.json`
   - Export your project id
   
