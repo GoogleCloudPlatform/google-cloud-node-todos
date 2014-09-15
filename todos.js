@@ -1,5 +1,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
+    fs = require('fs'),
+    markdown = require('markdown').markdown,
     app = express();  
 
 var gcloud = require('gcloud'),
@@ -13,12 +15,6 @@ var ds = new datastore.Dataset({
 app.use(bodyParser.json());
 
 var todoListName = 'default-list';
-
-app.get('/', function(req, res) {
-  res.set('Content-Type', 'text/plain')
-     .status(200)
-     .send('hello world 2');
-});
 
 app.get('/todos', function(req, res) {
   var q = ds.createQuery('Todo')
@@ -125,6 +121,15 @@ app.delete('/todos', function(req, res) {
       });
     });
   });
+});
+
+app.get('/', function(req, res) {
+  res.status(200).send(
+    '<html><head><style>'+
+      fs.readFileSync('node_modules/github-markdown-css/github-markdown.css').toString()+
+    '</style></head><body class="markdown-body">'+
+      markdown.toHTML(fs.readFileSync('todos.apib').toString())+
+    '</body></html>');
 });
 
 module.exports = app;
