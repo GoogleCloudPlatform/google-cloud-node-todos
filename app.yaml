@@ -1,4 +1,4 @@
-application: gcloud-node-todos
+application: gcloud-todos
 module: default
 version: 1
 runtime: custom
