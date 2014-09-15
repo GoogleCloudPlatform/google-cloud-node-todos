@@ -1,0 +1,77 @@
+FORMAT: 1A
+
+# Todos API
+
+Todos API is a todo storage backend for [TodoMVC](//todomvc.com).
+
+# Group Todos
+
+# Todos Collection [/todos]
+
+## Create a Todo [POST]
+
++ Request (application/json)
+
+            {
+                "text": "do this"
+            }
+
++ Response 201 (application/json; charset=utf-8)
+
+            {
+                "id": 42,
+                "text": "do this",
+                "done": false
+            }
+
+## List all Todos [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+            [{
+                "id": 42,
+                "text": "do this",
+                "done": false
+            }]
+            
+## Archive done Todos [DELETE]
+
++ Response 204
+
+# Todo [/todos/{id}]
+
++ Parameters
+    + id (required, number, `42`)
+
+## Get a Todo [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+            {
+                "id": 42,
+                "text": "do this",
+                "done": false
+            }
+
+
+## Update a Todo [PUT]
+
++ Request (application/json)
+
+            {
+                "id": 42,
+                "text": "do this",
+                "done": true
+            }
+
++ Response 200 (application/json; charset=utf-8)
+
+            {
+                "id": 42,
+                "text": "do this",
+                "done": true
+            }
+
+## Delete a Todo [DELETE]
+
++ Response 204

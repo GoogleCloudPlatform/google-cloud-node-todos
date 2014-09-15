@@ -1,0 +1,21 @@
+{
+  "name": "gcloud-node-todos",
+  "description": "todomvc sample for gcloud-node",
+  "version": "0.0.1",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "express": "^4.5.1",
+    "body-parser": "^1.4.3",
+    "gcloud": "^0.6.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.2",
+    "dredd": "^0.3.9",
+    "request": "^2.42.0",
+    "gulp": "^3.8.8"
+  },
+  "scripts": {
+    "lint": "jshint *.js",
+    "test": "gulp test"
+  }
+}
