@@ -124,6 +124,12 @@ app.delete('/todos', function(req, res) {
   });
 });
 
+app.get('/_ah/health', function(req, res) {
+  res.status(200)
+     .set('Content-Type', 'text/plain');
+     .send(200, 'ok');
+});
+
 var githubMarkdownCSS = 'node_modules/github-markdown-css/github-markdown.css';
 var todosAPIBlueprint = 'todos.apib';
 app.get('/', function(req, res) {
