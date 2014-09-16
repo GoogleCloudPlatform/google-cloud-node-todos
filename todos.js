@@ -2,6 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     fs = require('fs'),
     markdown = require('markdown').markdown,
+    async = require('async');
     app = express();  
 
 var gcloud = require('gcloud'),
@@ -123,13 +124,26 @@ app.delete('/todos', function(req, res) {
   });
 });
 
+var githubMarkdownCSS = 'node_modules/github-markdown-css/github-markdown.css';
+var todosAPIBlueprint = 'todos.apib';
 app.get('/', function(req, res) {
-  res.status(200).send(
-    '<html><head><style>'+
-      fs.readFileSync('node_modules/github-markdown-css/github-markdown.css').toString()+
-    '</style></head><body class="markdown-body">'+
-      markdown.toHTML(fs.readFileSync('todos.apib').toString())+
-    '</body></html>');
+  async.parallel([
+    function(callback) { fs.readFile(githubMarkdownCSS, callback); },
+    function(callback) { fs.readFile(todosAPIBlueprint, callback); },
+  ], function(err, results) {
+    if (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+      return;
+    }
+    res.status(200)
+       .set('Content-Type', 'text/html')
+       .send('<html><head><style>'+
+             results[0].toString()+
+             '</style></head><body class="markdown-body">'+
+             markdown.toHTML(results[1].toString())+
+             '</body></html>');
+  });
 });
 
 module.exports = app;
