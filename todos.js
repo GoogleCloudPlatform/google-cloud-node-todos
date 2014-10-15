@@ -18,7 +18,7 @@ var gcloud = require('gcloud')({
 var ds = gcloud.datastore.dataset();
 var LIST_NAME = 'default-list';
 
-function formatTodo(item) {
+function entityToTodo(item) {
   var todo = item.data;
   todo.id = item.key.path.pop();
   return todo;
@@ -68,7 +68,7 @@ module.exports = {
         });
         return;
       }
-      callback(null, formatTodo(item));
+      callback(null, entityToTodo(item));
     });
   },
 
@@ -80,7 +80,7 @@ module.exports = {
         callback(err);
         return;
       }
-      callback(null, items.map(formatTodo));
+      callback(null, items.map(entityToTodo));
     });
   },
 

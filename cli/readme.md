@@ -9,3 +9,4 @@ $ cd cli
 $ npm link gcloud-node-todos
 $ npm link
 $ datastore-todos
+```
