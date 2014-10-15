@@ -12,7 +12,7 @@ if (!projectId) {
 
 var gcloud = require('gcloud')({
   projectId: projectId,
-  credentials: require('../key.json')
+  credentials: require('./key.json')
 });
 
 var ds = gcloud.datastore.dataset();

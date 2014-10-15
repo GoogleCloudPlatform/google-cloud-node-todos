@@ -5,7 +5,7 @@ var express = require('express');
 var fs = require('fs');
 var markdown = require('markdown').markdown;
 
-var css = require.resolve('../node_modules/github-markdown-css/github-markdown.css');
+var css = require.resolve('./node_modules/github-markdown-css/github-markdown.css');
 var apib = require.resolve('./todos.apib');
 var githubMarkdownCSS = fs.readFileSync(css).toString();
 var todosAPIBlueprint = fs.readFileSync(apib).toString();

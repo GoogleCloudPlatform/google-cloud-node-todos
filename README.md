@@ -5,7 +5,7 @@
 
 ## Examples
 
-See the [apps](//github.com/GoogleCloudPlatform/gcloud-node-todos/apps) directory for a full list of examples.
+- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/cli)
 
 Have an idea for a new implementation? Please [raise an issue](//github.com/GoogleCloudPlatform/gcloud-node-todos/issues/new).
 

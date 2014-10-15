@@ -28,10 +28,10 @@ function stopServer(cb) {
 gulp.task('dredd', function(cb) {
   startServer(function() {
     new Dredd({
-      blueprintPath: 'server/todos.apib',
+      blueprintPath: 'todos.apib',
       server: 'http://localhost:8080',
       options: {
-        hookfiles: 'server/test/hooks.js'
+        hookfiles: 'tests/hooks.js'
       }
     })
     .run(function() {
@@ -41,7 +41,7 @@ gulp.task('dredd', function(cb) {
 });
 
 gulp.task('lint', function() {
-  return gulp.src(['./apps/**/*.js', './server/**/*.js', '!**/node_modules/**'])
+  return gulp.src(['**/*.js', '!**/node_modules/**'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
