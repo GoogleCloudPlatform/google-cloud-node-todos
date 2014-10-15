@@ -18,7 +18,7 @@
 
 'use strict';
 
-var todos = require('../../server/todos.js');
+var todos = require('../todos.js');
 
 var inquirer = require('inquirer');
 var actions = {
