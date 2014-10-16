@@ -59,7 +59,7 @@ app.delete('/todos/:id', function(req, res) {
 });
 
 function _handleApiResponse(res, successStatus) {
-  return function(err, response) {
+  return function(err, payload) {
     if (err) {
       console.error(err);
       res.status(err.code).send(err.message);
@@ -68,6 +68,6 @@ function _handleApiResponse(res, successStatus) {
     if (successStatus) {
       res.status(successStatus);
     }
-    res.json(response);
+    res.json(payload);
   };
 }
