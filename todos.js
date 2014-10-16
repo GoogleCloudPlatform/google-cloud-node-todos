@@ -1,144 +1,115 @@
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    fs = require('fs'),
-    markdown = require('markdown').markdown,
-    app = express();  
+'use strict';
 
-var gcloud = require('gcloud'),
-    datastore = gcloud.datastore;
+var projectId = process.env.GAE_LONG_APP_ID || process.env.DATASET_ID;
 
-var ds = new datastore.Dataset({
-  projectId: process.env.GAE_LONG_APP_ID || process.env.DATASET_ID,
-  keyFilename: 'key.json'
+if (!projectId) {
+  var MISSING_ID = [
+    'Cannot find your project ID. Please set an environment variable named ',
+    '"DATASET_ID", holding the ID of your project.'
+  ].join('');
+  throw new Error(MISSING_ID);
+}
+
+var gcloud = require('gcloud')({
+  projectId: projectId,
+  credentials: require('./key.json')
 });
 
-app.use(bodyParser.json());
+var ds = gcloud.datastore.dataset();
+var LIST_NAME = 'default-list';
 
-var todoListName = 'default-list';
+function entityToTodo(item) {
+  var todo = item.data;
+  todo.id = item.key.path.pop();
+  return todo;
+}
 
-app.get('/todos', function(req, res) {
-  var q = ds.createQuery('Todo')
-    .hasAncestor(ds.key('TodoList', todoListName));
-  ds.runQuery(q, function(err, items) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-      return;
-    }
-    res.json(items.map(function(obj, i) {
-      obj.data.id = obj.key.path.pop();
-      return obj.data;
-    }));
-  });
-});
+module.exports = {
+  delete: function(id, callback) {
+    ds.delete(ds.key(['TodoList', LIST_NAME, 'Todo', id]), function(err) {
+      callback(err || null);
+    });
+  },
 
-app.get('/todos/:id', function(req, res) {
-  var id = req.param('id');
-  ds.get(ds.key('TodoList', todoListName, 'Todo', id), function(err, obj) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-      return;
-    }
-    if (!obj) {
-      return res.status(404).send();
-    }
-    obj.data.id = obj.key.path.pop();
-    res.json(obj.data);
-  });
-});
-
-app.post('/todos', function(req, res) {
-  var todo = req.body;
-  todo.done = false;
-  ds.save({
-    key: ds.key('TodoList', todoListName, 'Todo'),
-    data: todo
-  }, function(err, key) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-      return;
-    }
-    todo.id = key.path.pop();
-    res.status(201).json(todo);
-  });    
-});
-
-app.put('/todos/:id', function(req, res) {
-  var id = req.param('id');
-  var todo = req.body;
-  ds.save({
-    key: ds.key('TodoList', todoListName, 'Todo', id),
-    data: todo
-  }, function(err, key) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-      return;
-    }
-    todo.id = id;
-    res.json(todo);
-  });
-});
-
-app.delete('/todos/:id', function(req, res) {
-  var id = req.param('id');
-  ds.delete(ds.key('TodoList', todoListName, 'Todo', id), function(err) {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-      return;
-    }
-    res.status(204).send();
-  });
-});
-
-app.delete('/todos', function(req, res) {
-  ds.runInTransaction(function(t, done) {
-    var q = ds.createQuery('Todo')
-      .hasAncestor(ds.key('TodoList', todoListName))
-      .filter('done =', true);
-    t.runQuery(q, function(err, items) {
-      if (err) {
-        t.rollback(done);
-        console.error(err);
-        res.status(500).send(err.message);
-        return;
-      }     
-      var keys = items.map(function(obj) {
-        return obj.key;
-      });
-      t.delete(keys, function(err) {
+  deleteCompleted: function(callback) {
+    ds.runInTransaction(function(transaction, done) {
+      var q = ds.createQuery('Todo')
+        .hasAncestor(ds.key(['TodoList', LIST_NAME]))
+        .filter('done =', true);
+      transaction.runQuery(q, function(err, items) {
         if (err) {
-          t.rollback(done);
-          console.error(err);
-          res.status(500).send(err.message);
+          transaction.rollback(done);
           return;
         }
-        done();
-        res.status(204).send();
+        var keys = items.map(function(todo) {
+          return todo.key;
+        });
+        transaction.delete(keys, function(err) {
+          if (err) {
+            transaction.rollback(done);
+            return;
+          }
+          done();
+        });
       });
+    }, callback);
+  },
+
+  get: function(id, callback) {
+    ds.get(ds.key(['TodoList', LIST_NAME, 'Todo', id]), function(err, item) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (!item) {
+        callback({
+          code: 404,
+          message: 'No matching entity was found.'
+        });
+        return;
+      }
+      callback(null, entityToTodo(item));
     });
-  });
-});
+  },
 
-app.get('/_ah/health', function(req, res) {
-  res.status(200)
-     .set('Content-Type', 'text/plain')
-     .send('ok');
-});
+  getAll: function(callback) {
+    var q = ds.createQuery('Todo')
+      .hasAncestor(ds.key(['TodoList', LIST_NAME]));
+    ds.runQuery(q, function(err, items) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      callback(null, items.map(entityToTodo));
+    });
+  },
 
-var githubMarkdownCSS = fs.readFileSync('node_modules/github-markdown-css/github-markdown.css').toString();
-var todosAPIBlueprint = fs.readFileSync('todos.apib').toString();
-app.get('/', function(req, res) {
-  res.status(200)
-    .set('Content-Type', 'text/html')
-    .send('<html><head><style>'+
-          githubMarkdownCSS+
-          '</style></head><body class="markdown-body">'+
-          markdown.toHTML(todosAPIBlueprint)+
-          '</body></html>');
-});
+  insert: function(data, callback) {
+    data.done = false;
+    ds.save({
+      key: ds.key(['TodoList', LIST_NAME, 'Todo']),
+      data: data
+    }, function(err, key) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      data.id = key.path.pop();
+      callback(null, data);
+    });
+  },
 
-module.exports = app;
+  update: function(id, data, callback) {
+    ds.save({
+      key: ds.key(['TodoList', LIST_NAME, 'Todo', id]),
+      data: data
+    }, function(err) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      data.id = id;
+      callback(null, data);
+    });
+  }
+};

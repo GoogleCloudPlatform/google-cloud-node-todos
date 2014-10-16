@@ -1,88 +1,107 @@
-gcloud-node-todos
-=================
+# gcloud-node-todos
+>  [TodoMVC](http://todomvc.com) backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
 
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
 
-TodoMVC backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
+## API
 
-# API
+#### Insert a todo
+```sh
+$ curl -X POST -H "Content-Type: application/json" -d '{"text": "do this"}' http://localhost:8080/todos
+```
 
-- Insert a todo
+#### Get a todo
+```sh
+$ curl -X GET http://localhost:8080/todos/{{todo id}}
+```
 
-        curl -X POST -d '{text: "do this"}' http://localhost:8080/todos
+#### Mark a todo as done
+```sh
+$ curl -X PUT -H "Content-Type: application/json" -d '{"text": "do this", "done": true}' http://localhost:8080/todos/{{todo id}}
+```
 
-- Get a todo
+#### Delete a todo
+```sh
+$ curl -X DELETE http://localhost:8080/todos/{{todo id}}
+```
 
-        curl -X GET http://localhost:8080/todos/{{todo id}}
+#### Get all todos
+```sh
+$ curl -X GET http://localhost:8080/todos
+```
 
-- Mark a todo as done
+#### Clear all `done` todos
+```sh
+$ curl -X DELETE http://localhost:8080/todos
+```
 
-        curl -X PUT -d '{text: "do this", "done": true}' http://localhost:8080/todos/{{todo id}}
+## Prerequisites
 
-- Delete a todo
+1. Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
+2. [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
+3. Create a new service account and copy the JSON credentials to `key.json`
+4. Export your project id:
+    ```sh
+    $ export PROJECT_ID=<project id>
+    ```
 
-        curl -X DELETE http://localhost:8080/todos/{{todo id}}
+## Running
 
-- Get all todos
- 
-        curl -X GET http://localhost:8080/todos
+#### Locally
+```sh
+# Set your default Dataset
+$ export DATASET_ID=$PROJECT_ID
 
-- Clear all `done` todos
+# Install the dependencies
+$ npm install
 
-        curl -X DELETE http://localhost:8080/todos
+# Start the server
+$ npm start
 
-# Prerequisites
+# Run acceptance test
+$ npm test
+```
 
-  - Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
-  - [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
-  - Create a new service account and copy the `JSON` credentials to `key.json`
-  - Export your project id
-  
-        export PROJECT_ID=<project id>
+#### [Docker](https://docker.com)
+```sh
+# Check that Docker is running
+$ boot2docker up
+$ export DOCKER_HOST=$(boot2docker shellinit)
 
-# Run locally
+# Build your Docker image
+$ docker build -t app .
 
-    # set your default dataset
-    export DATASET_ID=$PROJECT_ID
-    # fetch the dependencies
-    npm install
-    # start the app
-    npm start
-    # run acceptance test
-    dredd todos.apib http://localhost:8080 --hookfiles test_hooks.js
+# Start a new Docker container
+$ docker run -e DATASET_ID=$PROJECT_ID -p 8080:8080 app
 
-# Run in docker
+# Test the app
+$ curl -X GET http://$(boot2docker ip):8080
+```
 
-    # check that docker is running
-    boot2docker up
-    export DOCKER_HOST=$(boot2docker shellinit)
+#### [Managed VMs](https://developers.google.com/appengine/docs/managed-vms/)
+```sh
+# Get gcloud
+$ curl https://sdk.cloud.google.com | bash
 
-    # build your docker image
-    docker build -t app .
-    # start a new docker container
-    docker run -e DATASET_ID=$PROJECT_ID -p 8080:8080 app 
+# Authorize gcloud and set your default project
+$ gcloud auth login
+$ gcloud config set project $PROJECT_ID
 
-    # test the app
-    curl -X GET http://$(boot2docker ip):8080
+# Get Managed VMs component
+$ gcloud components update app-engine-managed-vms
 
-# Run w/ [Managed VMs](https://developers.google.com/appengine/docs/managed-vms/)
+# Check that Docker is running
+$ boot2docker up
 
-    # get gcloud
-    curl https://sdk.cloud.google.com | bash
-    # authorize gcloud and set your default project
-    gcloud auth login
-    gcloud config set project $PROJECT_ID
+# Run the app locally
+$ gcloud preview app run .
+$ curl -X GET http://localhost:8080
 
-    # get managed vms component
-    gcloud components update app-engine-managed-vms
+# Deploy the app to production
+$ gcloud preview app deploy .
+$ curl -X GET http://$PROJECT_ID.appspot.com
+```
 
-    # check that docker is running
-    boot2docker up
+## Other Examples
 
-    # run the app locally
-    gcloud preview app run .
-    curl -X GET http://localhost:8080
-
-    # deploy the app to production
-    gcloud preview app deploy .
-    curl -X GET http://$PROJECT_ID.appspot.com
+- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/cli)

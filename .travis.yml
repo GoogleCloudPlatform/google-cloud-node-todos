@@ -4,6 +4,6 @@ node_js:
 before_install:
 - openssl aes-256-cbc -K $encrypted_4e543ecb61f7_key -iv $encrypted_4e543ecb61f7_iv -in key.json.enc -out key.json -d
 before_script:
-- npm run-script lint
+- gulp lint
 env:
 - DATASET_ID=gcloud-todos
