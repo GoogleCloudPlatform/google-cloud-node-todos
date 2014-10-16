@@ -22,7 +22,7 @@ gulp.task('dredd', function(cb) {
 });
 
 gulp.task('lint', function() {
-  return gulp.src(['**/*.js', '!**/node_modules/**'])
+  return gulp.src(['*.js', '*/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });

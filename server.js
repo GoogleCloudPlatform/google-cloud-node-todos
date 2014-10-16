@@ -35,30 +35,30 @@ app.get('/', function(req, res) {
 });
 
 app.get('/todos', function(req, res) {
-  todos.getAll(_handleResponse(res));
+  todos.getAll(_handleApiResponse(res));
 });
 
 app.get('/todos/:id', function(req, res) {
-  todos.get(req.param('id'), _handleResponse(res));
+  todos.get(req.param('id'), _handleApiResponse(res));
 });
 
 app.post('/todos', function(req, res) {
-  todos.insert(req.body, _handleResponse(res, 201));
+  todos.insert(req.body, _handleApiResponse(res, 201));
 });
 
 app.put('/todos/:id', function(req, res) {
-  todos.update(req.param('id'), req.body, _handleResponse(res));
+  todos.update(req.param('id'), req.body, _handleApiResponse(res));
 });
 
 app.delete('/todos', function(req, res) {
-  todos.deleteCompleted(_handleResponse(res, 204));
+  todos.deleteCompleted(_handleApiResponse(res, 204));
 });
 
 app.delete('/todos/:id', function(req, res) {
-  todos.delete(req.param('id'), _handleResponse(res, 204));
+  todos.delete(req.param('id'), _handleApiResponse(res, 204));
 });
 
-function _handleResponse(res, successStatus) {
+function _handleApiResponse(res, successStatus) {
   return function(err, response) {
     if (err) {
       console.error(err);
