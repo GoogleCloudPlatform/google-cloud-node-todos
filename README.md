@@ -3,12 +3,6 @@
 
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
 
-## Examples
-
-- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/cli)
-
-Have an idea for a new implementation? Please [raise an issue](//github.com/GoogleCloudPlatform/gcloud-node-todos/issues/new).
-
 ## API
 
 #### Insert a todo
@@ -107,3 +101,7 @@ $ curl -X GET http://localhost:8080
 $ gcloud preview app deploy .
 $ curl -X GET http://$PROJECT_ID.appspot.com
 ```
+
+## Other Examples
+
+- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/cli)
