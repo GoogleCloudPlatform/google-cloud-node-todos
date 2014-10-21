@@ -104,4 +104,4 @@ $ curl -X GET http://$PROJECT_ID.appspot.com
 
 ## Other Examples
 
-- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/cli)
+- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli)
