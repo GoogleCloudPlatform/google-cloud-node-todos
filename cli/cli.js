@@ -72,14 +72,20 @@ function add() {
     message: 'What do you need to do?',
     name: 'text'
   }, function(answers) {
-    todos.insert({
-      text: answers.text
-    }, function(err) {
-      if (err) {
-        throw err;
-      }
+    if(answers.text !== '') {
+      todos.insert({
+        text: answers.text
+      }, function(err) {
+        if (err) {
+          throw err;
+        }
+        console.log('"' + answers.text + '" was successfully added.\n');
+        init();
+      });
+    } else {
+      console.log('Aborted.\n');
       init();
-    });
+    }
   });
 }
 
@@ -139,6 +145,11 @@ function displayTodosAndDelete() {
     if (err) {
       throw err;
     }
+    if(entities.length === 0) {
+      console.log('There are no todos to delete!\n');
+      init();
+      return;
+    }
     inquirer.prompt({
       message: 'What would you like to delete?',
       name: 'completed',
@@ -171,6 +182,7 @@ function deleteCompleted() {
     if (err) {
       throw err;
     }
+    console.log('Completed todos were deleted!\n');
     init();
   });
 }
