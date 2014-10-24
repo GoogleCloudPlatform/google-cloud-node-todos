@@ -2,59 +2,40 @@
 
 var bodyParser = require('body-parser');
 var express = require('express');
-var fs = require('fs');
-var markdown = require('markdown').markdown;
-
-var css = require.resolve('./node_modules/github-markdown-css/github-markdown.css');
-var apib = require.resolve('./todos.apib');
-var githubMarkdownCSS = fs.readFileSync(css).toString();
-var todosAPIBlueprint = fs.readFileSync(apib).toString();
+var todomvc = require('todomvc');
 
 var todos = require('./todos.js');
 
-var app = module.exports = express();
-app.use(bodyParser.json());
+var api = express();
+api.use(bodyParser.json());
 
-app.get('/_ah/health', function(req, res) {
+api.get('/', function(req, res) {
   res.status(200)
-     .set('Content-Type', 'text/plain')
-     .send('ok');
+    .set('Content-Type', 'text/plain')
+    .send('ok');
 });
 
-app.get('/', function(req, res) {
-  res.status(200)
-    .set('Content-Type', 'text/html')
-    .send([
-      '<html>',
-      '  <head>',
-      '    <style>' + githubMarkdownCSS + '</style>',
-      '  </head>',
-      '  <body><article class="markdown-body">' + markdown.toHTML(todosAPIBlueprint) + '</article></body>',
-      '</html>'
-    ].join('\n'));
-});
-
-app.get('/todos', function(req, res) {
+api.get('/todos', function(req, res) {
   todos.getAll(_handleApiResponse(res));
 });
 
-app.get('/todos/:id', function(req, res) {
+api.get('/todos/:id', function(req, res) {
   todos.get(req.param('id'), _handleApiResponse(res));
 });
 
-app.post('/todos', function(req, res) {
+api.post('/todos', function(req, res) {
   todos.insert(req.body, _handleApiResponse(res, 201));
 });
 
-app.put('/todos/:id', function(req, res) {
+api.put('/todos/:id', function(req, res) {
   todos.update(req.param('id'), req.body, _handleApiResponse(res));
 });
 
-app.delete('/todos', function(req, res) {
+api.delete('/todos', function(req, res) {
   todos.deleteCompleted(_handleApiResponse(res, 204));
 });
 
-app.delete('/todos/:id', function(req, res) {
+api.delete('/todos/:id', function(req, res) {
   todos.delete(req.param('id'), _handleApiResponse(res, 204));
 });
 
@@ -71,3 +52,49 @@ function _handleApiResponse(res, successStatus) {
     res.json(payload);
   };
 }
+
+todomvc.use('/api', api);
+todomvc.get('/_ah/health', function(req, res) {
+  res.status(200)
+    .set('Content-Type', 'text/plain')
+    .send('ok');
+});
+
+todomvc.learnJson = {
+  name: 'Google Cloud Platform',
+  description: 'Google Cloud Platform is now available via Node.js with gcloud-node.',
+  homepage: 'http://cloud.google.com/solutions/nodejs',
+  examples: [
+    {
+      name: 'gcloud-node + Express',
+      url: 'https://github.com/GoogleCloudPlatform/gcloud-node-todos'
+    }
+  ],
+  link_groups: [
+    {
+      heading: 'Official Resources',
+      links: [
+        {
+          name: 'gcloud-node',
+          url: 'https://github.com/GoogleCloudPlatform/gcloud-node'
+        },
+        {
+          name: 'Google Cloud Datastore',
+          url: 'https://cloud.google.com/datastore/docs'
+        }
+      ]
+    },
+    {
+      heading: 'Community',
+      links: [
+        {
+          name: 'gcloud-node on Stack Overflow',
+          url: 'http://stackoverflow.com/questions/tagged/gcloud-node'
+        }
+      ]
+    }
+  ]
+};
+
+module.exports.api = api;
+module.exports.todomvc = todomvc;

@@ -70,16 +70,16 @@ function init() {
 function add() {
   inquirer.prompt({
     message: 'What do you need to do?',
-    name: 'text'
+    name: 'title'
   }, function(answers) {
-    if(answers.text !== '') {
+    if (answers.title !== '') {
       todos.insert({
-        text: answers.text
+        title: answers.title
       }, function(err) {
         if (err) {
           throw err;
         }
-        console.log('"' + answers.text + '" was successfully added.\n');
+        console.log('"' + answers.title + '" was successfully added.\n');
         init();
       });
     } else {
@@ -105,8 +105,8 @@ function displayTodos() {
       type: 'checkbox',
       choices: entities.map(function(entity) {
         return {
-          name: entity.text,
-          checked: entity.done,
+          name: entity.title,
+          checked: entity.completed,
           value: entity
         };
       })
@@ -116,9 +116,9 @@ function displayTodos() {
         if (answers.completed.some(function(completed) {
           return completed.id === entity.id;
         })) {
-          entity.done = true;
+          entity.completed = true;
         } else {
-          entity.done = false;
+          entity.completed = false;
         }
         return entity;
       });
@@ -156,7 +156,7 @@ function displayTodosAndDelete() {
       type: 'checkbox',
       choices: entities.map(function(entity) {
         return {
-          name: entity.text,
+          name: entity.title,
           checked: false,
           value: entity
         };

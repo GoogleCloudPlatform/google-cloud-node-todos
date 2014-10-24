@@ -1,23 +1,23 @@
 'use strict';
 
 var gulp = require('gulp');
-var Dredd = require('dredd');
 var jshint = require('gulp-jshint');
-var server = require('./server');
+var todomvcApi = require('todomvc-api');
 
-gulp.task('dredd', function(cb) {
-  var test = new Dredd({
-    blueprintPath: 'todos.apib',
-    server: 'http://localhost:8080',
-    options: {
-      hookfiles: 'tests/hooks.js'
-    }
-  });
+var apiServer = require('./server').api;
+var todomvcServer = require('./server').todomvc;
 
-  server.listen(8080, function() {
-    test.run(function() {
-      this.close(cb);
-    }.bind(this));
+gulp.task('validate-api', function(cb) {
+  var server = apiServer.listen(8080, function() {
+    todomvcApi.validate(function(err, stats) {
+      server.close(function() {
+        if (stats && (stats.errors || stats.failures)) {
+          cb('api validation failed');
+          return;
+        }
+        cb(err && err.message || err);
+      });
+    });
   });
 });
 
@@ -28,7 +28,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('serve', function(cb) {
-  server.listen(8080, cb);
+  todomvcServer.listen(8080, cb);
 });
 
-gulp.task('test', ['dredd']);
+gulp.task('test', ['validate-api']);
