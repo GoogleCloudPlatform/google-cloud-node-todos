@@ -41,9 +41,10 @@ $ curl -X DELETE http://localhost:8080/todos
 2. [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
 3. Create a new service account and copy the JSON credentials to `key.json`
 4. Export your project id:
-    ```sh
-    $ export PROJECT_ID=<project id>
-    ```
+
+``` sh
+$ export PROJECT_ID=<project id>
+```
 
 ## Running
 
