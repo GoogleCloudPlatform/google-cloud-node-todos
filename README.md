@@ -88,11 +88,14 @@ $ curl https://sdk.cloud.google.com | bash
 $ gcloud auth login
 $ gcloud config set project $PROJECT_ID
 
-# Get Managed VMs component
-$ gcloud components update app-engine-managed-vms
+# Get App Engine component
+$ gcloud components update app
 
 # Check that Docker is running
 $ boot2docker up
+
+# Download the Node.js Docker image
+$ docker pull google/nodejs-runtime
 
 # Run the app locally
 $ gcloud preview app run .
