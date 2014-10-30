@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
       '  <head>',
       '    <style>' + githubMarkdownCSS + '</style>',
       '  </head>',
-      '  <body class="markdown-body">' + markdown.toHTML(todosAPIBlueprint) + '</body>',
+      '  <body><article class="markdown-body">' + markdown.toHTML(todosAPIBlueprint) + '</article></body>',
       '</html>'
     ].join('\n'));
 });
