@@ -1,39 +1,7 @@
 # gcloud-node-todos
->  [TodoMVC](http://todomvc.com) backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
+> [TodoMVC](http://todomvc.com) backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
 
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
-
-## API
-
-#### Insert a todo
-```sh
-$ curl -X POST -H "Content-Type: application/json" -d '{"text": "do this"}' http://localhost:8080/todos
-```
-
-#### Get a todo
-```sh
-$ curl -X GET http://localhost:8080/todos/{{todo id}}
-```
-
-#### Mark a todo as done
-```sh
-$ curl -X PUT -H "Content-Type: application/json" -d '{"text": "do this", "done": true}' http://localhost:8080/todos/{{todo id}}
-```
-
-#### Delete a todo
-```sh
-$ curl -X DELETE http://localhost:8080/todos/{{todo id}}
-```
-
-#### Get all todos
-```sh
-$ curl -X GET http://localhost:8080/todos
-```
-
-#### Clear all `done` todos
-```sh
-$ curl -X DELETE http://localhost:8080/todos
-```
 
 ## Prerequisites
 
@@ -58,9 +26,6 @@ $ npm install
 
 # Start the server
 $ npm start
-
-# Run acceptance test
-$ npm test
 ```
 
 #### [Docker](https://docker.com)

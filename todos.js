@@ -35,7 +35,7 @@ module.exports = {
     ds.runInTransaction(function(transaction, done) {
       var q = ds.createQuery('Todo')
         .hasAncestor(ds.key(['TodoList', LIST_NAME]))
-        .filter('done =', true);
+        .filter('completed =', true);
       transaction.runQuery(q, function(err, items) {
         if (err) {
           transaction.rollback(done);
@@ -85,7 +85,7 @@ module.exports = {
   },
 
   insert: function(data, callback) {
-    data.done = false;
+    data.completed = false;
     ds.save({
       key: ds.key(['TodoList', LIST_NAME, 'Todo']),
       data: data

@@ -4,16 +4,15 @@
   "version": "0.0.1",
   "license": "Apache 2.0",
   "dependencies": {
-    "express": "^4.5.1",
     "body-parser": "^1.4.3",
+    "express": "^4.5.1",
     "gcloud": "^0.8.1",
-    "markdown": "^0.5.0",
-    "github-markdown-css": "^1.1.1"
+    "todomvc": "^0.1.0"
   },
   "devDependencies": {
-    "dredd": "^0.3.12",
     "gulp": "^3.8.8",
-    "gulp-jshint": "^1.8.5"
+    "gulp-jshint": "^1.8.5",
+    "todomvc-api": "^0.1.0"
   },
   "scripts": {
     "start": "gulp serve",
