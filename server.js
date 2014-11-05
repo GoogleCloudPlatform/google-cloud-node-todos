@@ -98,7 +98,7 @@ app.get('/_ah/health', function(req, res) {
     .set('Content-Type', 'text/plain')
     .send('ok');
 });
-app.use(api);
+app.use('/api', api);
 app.use(todomvc);
 
 module.exports.app = app;
