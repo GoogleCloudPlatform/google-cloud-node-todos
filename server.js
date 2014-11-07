@@ -53,13 +53,6 @@ function _handleApiResponse(res, successStatus) {
   };
 }
 
-todomvc.use('/api', api);
-todomvc.get('/_ah/health', function(req, res) {
-  res.status(200)
-    .set('Content-Type', 'text/plain')
-    .send('ok');
-});
-
 todomvc.learnJson = {
   name: 'Google Cloud Platform',
   description: 'Google Cloud Platform is now available via Node.js with gcloud-node.',
@@ -96,5 +89,21 @@ todomvc.learnJson = {
   ]
 };
 
+var app = express()
+
+app.get('/', function(req, res) {
+  res.redirect('/examples/angularjs');
+});
+
+app.get('/_ah/health', function(req, res) {
+  res.status(200)
+    .set('Content-Type', 'text/plain')
+    .send('ok');
+});
+
+app.use(todomvc);
+app.use('/api', api);
+
+
 module.exports.api = api;
-module.exports.todomvc = todomvc;
+module.exports.app = app;
