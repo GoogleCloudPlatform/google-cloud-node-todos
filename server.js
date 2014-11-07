@@ -91,7 +91,7 @@ todomvc.learnJson = {
 
 var app = express()
 
-app.use('/', function(req, res) {
+app.use('^/$', function(req, res) {
   res.redirect('/examples/angularjs');
 });
 
@@ -103,6 +103,7 @@ app.get('/_ah/health', function(req, res) {
 
 app.use(todomvc);
 app.use('/api', api);
+
 
 module.exports.api = api;
 module.exports.app = app;
