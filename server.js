@@ -90,17 +90,19 @@ todomvc.learnJson = {
 };
 
 var app = express()
+
 app.use('^/$', function(req, res) {
   res.redirect('/examples/angularjs');
 });
+
 app.get('/_ah/health', function(req, res) {
   res.status(200)
     .set('Content-Type', 'text/plain')
     .send('ok');
 });
-app.use('/api', api);
-app.use(todomvc);
 
-module.exports.app = app;
+app.use(todomvc);
+app.use('/api', api);
+
 module.exports.api = api;
-module.exports.todomvc = todomvc;
+module.exports.app = app;
