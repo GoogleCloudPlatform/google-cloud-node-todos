@@ -6,9 +6,26 @@ var todomvc = require('todomvc');
 
 var todos = require('./todos.js');
 
-var api = express();
+var app = module.exports.app = express();
+var api = module.exports.api = express();
 api.use(bodyParser.json());
+app.use('/api', api);
 
+// Declare the root route *before* inserting TodoMVC as middleware to prevent
+// the TodoMVC app from overriding it.
+app.get('/', function(req, res) {
+  res.redirect('/examples/angularjs');
+});
+app.use(todomvc);
+
+// Respond to the App Engine health check
+app.get('/_ah/health', function(req, res) {
+  res.status(200)
+    .set('Content-Type', 'text/plain')
+    .send('ok');
+});
+
+// API Routes.
 api.get('/', function(req, res) {
   res.status(200)
     .set('Content-Type', 'text/plain')
@@ -53,13 +70,7 @@ function _handleApiResponse(res, successStatus) {
   };
 }
 
-todomvc.use('/api', api);
-todomvc.get('/_ah/health', function(req, res) {
-  res.status(200)
-    .set('Content-Type', 'text/plain')
-    .send('ok');
-});
-
+// Configure the sidebar to display relevant links for our hosted version of TodoMVC.
 todomvc.learnJson = {
   name: 'Google Cloud Platform',
   description: 'Google Cloud Platform is now available via Node.js with gcloud-node.',
@@ -95,6 +106,3 @@ todomvc.learnJson = {
     }
   ]
 };
-
-module.exports.api = api;
-module.exports.todomvc = todomvc;

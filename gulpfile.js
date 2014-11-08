@@ -4,11 +4,12 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var todomvcApi = require('todomvc-api');
 
-var apiServer = require('./server').api;
-var todomvcServer = require('./server').todomvc;
+var server = require('./server');
+var api = server.api;
+var app = server.app;
 
 gulp.task('validate-api', function(cb) {
-  var server = apiServer.listen(8080, function() {
+  var server = api.listen(8080, function() {
     todomvcApi.validate(function(err, stats) {
       server.close(function() {
         if (stats && (stats.errors || stats.failures)) {
@@ -28,7 +29,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('serve', function(cb) {
-  todomvcServer.listen(8080, cb);
+  app.listen(8080, cb);
 });
 
 gulp.task('test', ['validate-api']);
