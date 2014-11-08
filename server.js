@@ -3,13 +3,14 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var todomvc = require('todomvc');
+var todomvcApi = require('todomvc-api');
 
 var todos = require('./todos.js');
 
 var app = module.exports.app = express();
 var api = module.exports.api = express();
 api.use(bodyParser.json());
-app.use('/api', api);
+app.use('/api', [todomvcApi.server, api])
 
 // Declare the root route *before* inserting TodoMVC as middleware to prevent
 // the TodoMVC app from overriding it.
