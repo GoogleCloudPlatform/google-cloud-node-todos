@@ -71,6 +71,7 @@ $ gcloud preview app deploy .
 $ curl -X GET http://$PROJECT_ID.appspot.com
 ```
 
-## Other Examples
+## Resources
 
-- [Command Line](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli)
+- [Command Line Example](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli)
+- [Node.js on the Google Cloud Platform](//cloud.google.com/solutions/nodejs)
