@@ -7,6 +7,6 @@
 $ npm link
 $ cd cli
 $ npm link gcloud-node-todos
-$ npm link
+$ npm install
 $ datastore-todos
 ```
