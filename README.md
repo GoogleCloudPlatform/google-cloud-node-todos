@@ -32,7 +32,7 @@ $ npm start
 ```sh
 # Check that Docker is running
 $ boot2docker up
-$ export DOCKER_HOST=$(boot2docker shellinit)
+$ $(boot2docker shellinit)
 
 # Build your Docker image
 $ docker build -t app .
