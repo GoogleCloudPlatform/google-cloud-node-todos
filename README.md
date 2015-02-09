@@ -1,22 +1,29 @@
 # gcloud-node-todos
-> [TodoMVC](http://todomvc.com) backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
+> [TodoMVC][todomvc] backend using [gcloud-node][gcloud-node].
 
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
 
-## Prerequisites
+## Install
 
-1. Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
-2. [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
-3. Create a new service account and copy the JSON credentials to `key.json`
-4. Export your project id:
+1. Clone this repo and cd into it:
+
+    ```sh
+    $ git clone git@github.com:GoogleCloudPlatform/gcloud-node-todos.git
+    $ cd gcloud-node-todos
+    ```
+
+2. Create a new cloud project on [console.developers.google.com][dev-console]
+3. [Enable][enable-datastore] the [Google Cloud Datastore API][datastore]
+4. Create a new service account and copy the JSON credentials to `key.json`
+5. Export your project id:
 
     ```sh
     $ export PROJECT_ID=<project id>
     ```
 
-## Running
+## Usage
 
-#### Locally
+#### Run locally
 ```sh
 # Set your default Dataset
 $ export DATASET_ID=$PROJECT_ID
@@ -28,7 +35,9 @@ $ npm install
 $ npm start
 ```
 
-#### [Docker](https://docker.com)
+Point your browser at http://127.0.0.1:8080
+
+#### Run with [Docker][docker]
 ```sh
 # Check that Docker is running
 $ boot2docker up
@@ -41,10 +50,13 @@ $ docker build -t app .
 $ docker run -e DATASET_ID=$PROJECT_ID -p 8080:8080 app
 
 # Test the app
-$ curl -X GET http://$(boot2docker ip):8080
+$ curl -L http://$(boot2docker ip):8080
+
+# Print out local address to test in your browser
+$ echo http://$(boot2docker ip):8080
 ```
 
-#### [Managed VMs](https://developers.google.com/appengine/docs/managed-vms/)
+#### Run on [Managed VMs][managed-vms]
 ```sh
 # Get gcloud
 $ curl https://sdk.cloud.google.com | bash
@@ -55,6 +67,9 @@ $ gcloud config set project $PROJECT_ID
 
 # Get App Engine component
 $ gcloud components update app
+
+# Download App Engine Docker Runtime images for Managed VMs
+$ gcloud preview app setup-managed-vms
 
 # Check that Docker is running
 $ boot2docker up
@@ -68,10 +83,26 @@ $ curl -X GET http://localhost:8080
 
 # Deploy the app to production
 $ gcloud preview app deploy .
-$ curl -X GET http://$PROJECT_ID.appspot.com
 ```
+
+After deployment, your app should be available at `http://1.$PROJECT_ID.appspot.com`
 
 ## Resources
 
-- [Command Line Example](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli)
-- [Node.js on the Google Cloud Platform](//cloud.google.com/solutions/nodejs)
+- [Command Line Example][cli]
+- [Node.js on the Google Cloud Platform][node-gcp]
+
+## License
+
+[Apache License 2.0][license]
+
+[todomvc]: http://todomvc.com
+[gcloud-node]: https://github.com/GoogleCloudPlatform/gcloud-node
+[dev-console]: https://console.developers.google.com
+[enable-datastore]: https://console.developers.google.com/flows/enableapi?apiid=datastore
+[datastore]: https://cloud.google.com/datastore/
+[docker]: https://docker.com
+[managed-vms]: https://developers.google.com/appengine/docs/managed-vms/
+[cli]: https://github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli
+[node-gcp]: https://cloud.google.com/solutions/nodejs
+[license]: LICENSE
