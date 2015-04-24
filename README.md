@@ -6,7 +6,7 @@
 ## Prerequisites
 
 1. Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
-2. [Enable](https://console.developers.google.com/flows/enableapi?apiid=datastore) the [Google Cloud Datastore API](https://developers.google.com/datastore)
+2. [Enable the Google Cloud Datastore API](https://console.developers.google.com/flows/enableapi?apiid=datastore). For more information about the Cloud Datastore, see [here](https://developers.google.com/datastore).
 3. Create a new service account and copy the JSON credentials to `key.json`
 4. Export your project id:
 
