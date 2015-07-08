@@ -58,16 +58,17 @@ $ gcloud components update app
 
 # Check that Docker is running
 $ boot2docker up
+$ $(boot2docker shellinit)
 
 # Download the Node.js Docker image
 $ docker pull google/nodejs-runtime
 
 # Run the app locally
-$ gcloud preview app run .
+$ gcloud preview app run app.yaml
 $ curl -X GET http://localhost:8080
 
 # Deploy the app to production
-$ gcloud preview app deploy .
+$ gcloud preview app deploy app.yaml
 $ curl -X GET http://$PROJECT_ID.appspot.com
 ```
 
