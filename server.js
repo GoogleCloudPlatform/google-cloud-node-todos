@@ -38,7 +38,8 @@ api.get('/todos', function(req, res) {
 });
 
 api.get('/todos/:id', function(req, res) {
-  todos.get(req.param('id'), _handleApiResponse(res));
+  var id = parseInt(req.params.id, 10);
+  todos.get(id, _handleApiResponse(res));
 });
 
 api.post('/todos', function(req, res) {
@@ -46,7 +47,8 @@ api.post('/todos', function(req, res) {
 });
 
 api.put('/todos/:id', function(req, res) {
-  todos.update(req.param('id'), req.body, _handleApiResponse(res));
+  var id = parseInt(req.params.id, 10);
+  todos.update(id, req.body, _handleApiResponse(res));
 });
 
 api.delete('/todos', function(req, res) {
@@ -54,7 +56,8 @@ api.delete('/todos', function(req, res) {
 });
 
 api.delete('/todos/:id', function(req, res) {
-  todos.delete(req.param('id'), _handleApiResponse(res, 204));
+  var id = parseInt(req.params.id, 10);
+  todos.delete(id, _handleApiResponse(res, 204));
 });
 
 function _handleApiResponse(res, successStatus) {
