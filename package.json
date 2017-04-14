@@ -1,12 +1,12 @@
 {
-  "name": "gcloud-node-todos",
-  "description": "TodoMVC sample for gcloud-node",
+  "name": "google-cloud-node-todos",
+  "description": "TodoMVC sample for google-cloud-node",
   "version": "0.2.0",
   "license": "Apache-2.0",
   "dependencies": {
+    "@google-cloud/datastore": "^0.8.0",
     "body-parser": "^1.4.3",
     "express": "^4.5.1",
-    "gcloud": "^0.36.0",
     "todomvc": "^0.1.0",
     "todomvc-api": "^0.2.1"
   },

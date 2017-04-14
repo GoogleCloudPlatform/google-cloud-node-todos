@@ -77,11 +77,11 @@ function _handleApiResponse(res, successStatus) {
 // Configure the sidebar to display relevant links for our hosted version of TodoMVC.
 todomvc.learnJson = {
   name: 'Google Cloud Platform',
-  description: 'Google Cloud Platform is now available via Node.js with gcloud-node.',
+  description: 'Google Cloud Platform is now available via Node.js with google-cloud-node.',
   homepage: 'http://cloud.google.com/solutions/nodejs',
   examples: [
     {
-      name: 'gcloud-node + Express',
+      name: 'google-cloud-node + Express',
       url: 'https://github.com/GoogleCloudPlatform/gcloud-node-todos'
     }
   ],
@@ -90,8 +90,8 @@ todomvc.learnJson = {
       heading: 'Official Resources',
       links: [
         {
-          name: 'gcloud-node',
-          url: 'https://github.com/GoogleCloudPlatform/gcloud-node'
+          name: 'google-cloud-node',
+          url: 'https://github.com/GoogleCloudPlatform/google-cloud-node'
         },
         {
           name: 'Google Cloud Datastore',
@@ -103,8 +103,8 @@ todomvc.learnJson = {
       heading: 'Community',
       links: [
         {
-          name: 'gcloud-node on Stack Overflow',
-          url: 'http://stackoverflow.com/questions/tagged/gcloud-node'
+          name: 'google-cloud-node on Stack Overflow',
+          url: 'http://stackoverflow.com/questions/tagged/google-cloud-node'
         }
       ]
     }

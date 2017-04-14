@@ -10,18 +10,18 @@ if (!projectId) {
   throw new Error(MISSING_ID);
 }
 
-var gcloud = require('gcloud')({
+var datastore = require('@google-cloud/datastore')({
   projectId: projectId,
   credentials: require('./key.json')
 });
 
-var datastore = gcloud.datastore();
 var LIST_NAME = 'default-list';
 
-function entityToTodo(item) {
-  var todo = item.data;
-  todo.id = item.key.name || item.key.id;
-  return todo;
+function entityToTodo(entity) {
+  var key = entity[datastore.KEY];
+
+  entity.id = key.name || key.id;
+  return entity;
 }
 
 function saveTodo(key, data, callback) {
@@ -51,7 +51,9 @@ module.exports = {
   },
 
   deleteCompleted: function(callback) {
-    datastore.runInTransaction(function(transaction, done) {
+    var transaction = datastore.transaction();
+
+    transaction.run(function(err, transaction) {
       var query = transaction.createQuery('Todo')
         .hasAncestor(datastore.key(['TodoList', LIST_NAME]))
         .filter('completed', true);
@@ -66,9 +68,9 @@ module.exports = {
           return todo.key;
         }));
 
-        done();
+        transaction.commit(callback);
       });
-    }, callback);
+    });
   },
 
   get: function(id, callback) {

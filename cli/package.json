@@ -6,8 +6,8 @@
     "datastore-todos": "cli.js"
   },
   "dependencies": {
-    "gcloud-node-todos": "*",
-    "gcloud": "^0.8.1",
+    "google-cloud-node-todos": "*",
+    "@google-cloud/datastore": "^0.8.0",
     "inquirer": "^0.8.0"
   }
 }
