@@ -1,5 +1,5 @@
-# gcloud-node-todos
-> [TodoMVC](http://todomvc.com) backend using [gcloud-node](//github.com/GoogleCloudPlatform/gcloud-node).
+# google-cloud-node-todos
+> [TodoMVC](http://todomvc.com) backend using [google-cloud-node](//github.com/GoogleCloudPlatform/google-cloud-node).
 
 [![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
 

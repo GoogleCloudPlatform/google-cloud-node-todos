@@ -3,10 +3,10 @@
 ## Running
 
 ```sh
-# From the `gcloud-node-todos` root directory:
+# From the `google-cloud-node-todos` root directory:
 $ npm link
 $ cd cli
-$ npm link gcloud-node-todos
+$ npm link google-cloud-node-todos
 $ npm link
 $ datastore-todos
 ```
