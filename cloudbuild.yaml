@@ -1,10 +1,10 @@
 steps:
-- name: node:14-slim
+- name: node:14-alpine
   entrypoint: npm
   args: ['ci']
-- name: node:14-slim
+- name: node:14-alpine
   entrypoint: npm
   args: ['run', 'lint']
-- name: node:14-slim
+- name: node:14-alpine
   entrypoint: npm
   args: ['test']
