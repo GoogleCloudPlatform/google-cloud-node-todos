@@ -4,18 +4,20 @@
   "version": "0.2.0",
   "license": "Apache-2.0",
   "dependencies": {
-    "@google-cloud/datastore": "^0.8.0",
-    "body-parser": "^1.4.3",
-    "express": "^4.5.1",
-    "todomvc": "^0.1.0",
+    "@google-cloud/datastore": "^6.3.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "todomvc": "^0.1.1",
     "todomvc-api": "^0.2.1"
   },
   "devDependencies": {
-    "gulp": "^3.8.8",
-    "gulp-jshint": "^1.8.5"
+    "mocha": "^8.2.1",
+    "semistandard": "^16.0.0"
   },
   "scripts": {
-    "start": "gulp serve",
-    "test": "gulp test"
+    "start": "node index.js",
+    "test": "mocha",
+    "lint": "semistandard",
+    "fix": "semistandard --fix"
   }
 }

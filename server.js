@@ -1,67 +1,83 @@
+// Copyright 2017 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 'use strict';
 
-var bodyParser = require('body-parser');
-var express = require('express');
-var todomvc = require('todomvc');
-var todomvcApi = require('todomvc-api');
+const bodyParser = require('body-parser');
+const express = require('express');
+const todomvc = require('todomvc');
+const todomvcApi = require('todomvc-api');
 
-var todos = require('./todos.js');
+const todos = require('./todos.js');
 
-var app = module.exports.app = express();
-var api = module.exports.api = express();
+const app = module.exports.app = express();
+const api = module.exports.api = express();
+module.exports.port = process.env.PORT || 8080;
+
 api.use(bodyParser.json());
-app.use('/api', [todomvcApi.server, api])
+app.use('/api', [todomvcApi.server, api]);
 
 // Declare the root route *before* inserting TodoMVC as middleware to prevent
 // the TodoMVC app from overriding it.
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.redirect('/examples/angularjs');
 });
 app.use(todomvc);
 
 // Respond to the App Engine health check
-app.get('/_ah/health', function(req, res) {
+app.get('/_ah/health', function (req, res) {
   res.status(200)
     .set('Content-Type', 'text/plain')
     .send('ok');
 });
 
 // API Routes.
-api.get('/', function(req, res) {
+api.get('/', function (req, res) {
   res.status(200)
     .set('Content-Type', 'text/plain')
     .send('ok');
 });
 
-api.get('/todos', function(req, res) {
+api.get('/todos', function (req, res) {
   todos.getAll(_handleApiResponse(res));
 });
 
-api.get('/todos/:id', function(req, res) {
-  var id = parseInt(req.params.id, 10);
+api.get('/todos/:id', function (req, res) {
+  const id = parseInt(req.params.id, 10);
   todos.get(id, _handleApiResponse(res));
 });
 
-api.post('/todos', function(req, res) {
+api.post('/todos', function (req, res) {
   todos.insert(req.body, _handleApiResponse(res, 201));
 });
 
-api.put('/todos/:id', function(req, res) {
-  var id = parseInt(req.params.id, 10);
+api.put('/todos/:id', function (req, res) {
+  const id = parseInt(req.params.id, 10);
   todos.update(id, req.body, _handleApiResponse(res));
 });
 
-api.delete('/todos', function(req, res) {
+api.delete('/todos', function (req, res) {
   todos.deleteCompleted(_handleApiResponse(res, 204));
 });
 
-api.delete('/todos/:id', function(req, res) {
-  var id = parseInt(req.params.id, 10);
+api.delete('/todos/:id', function (req, res) {
+  const id = parseInt(req.params.id, 10);
   todos.delete(id, _handleApiResponse(res, 204));
 });
 
-function _handleApiResponse(res, successStatus) {
-  return function(err, payload) {
+function _handleApiResponse (res, successStatus) {
+  return function (err, payload) {
     if (err) {
       console.error(err);
       res.status(err.code).send(err.message);
