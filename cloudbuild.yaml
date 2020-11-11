@@ -1,0 +1,10 @@
+steps:
+- name: node
+  entrypoint: npm
+  args: ['ci']
+- name: node
+  entrypoint: npm
+  args: ['run', 'fix']
+- name: node
+  entrypoint: npm
+  args: ['test']
