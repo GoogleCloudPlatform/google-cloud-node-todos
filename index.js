@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const server = require('./server')
+const { app, port } = require('./server');
 
-const port = process.env.PORT || 8080
-server.app.listen(port, () => {
-  console.log(`server running at http://localhost:${port}`)
-})
+app.listen(port, () => {
+  console.log(`server running at http://localhost:${port}`);
+});

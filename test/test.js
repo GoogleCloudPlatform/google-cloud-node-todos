@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const { describe, it } = require('mocha')
-const todomvcApi = require('todomvc-api')
-const { api } = require('../server')
+const { describe, it } = require('mocha');
+const todomvcApi = require('todomvc-api');
+const { api } = require('../server');
 
 describe(__filename, () => {
   it('should validate the server', (done) => {
@@ -22,12 +22,12 @@ describe(__filename, () => {
       todomvcApi.validate(function (err, stats) {
         server.close(function () {
           if (stats && (stats.errors || stats.failures)) {
-            done(new Error('api validation failed'))
-            return
+            done(new Error('api validation failed'));
+            return;
           }
-          done(err)
-        })
-      })
-    })
-  })
-})
+          done(err);
+        });
+      });
+    });
+  });
+});

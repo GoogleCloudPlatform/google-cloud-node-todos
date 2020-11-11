@@ -12,12 +12,12 @@
   },
   "devDependencies": {
     "mocha": "^8.2.1",
-    "standard": "^16.0.1"
+    "semistandard": "^16.0.0"
   },
   "scripts": {
     "start": "node index.js",
     "test": "mocha",
-    "lint": "standard",
-    "fix": "standard --fix"
+    "lint": "semistandard",
+    "fix": "semistandard --fix"
   }
 }
