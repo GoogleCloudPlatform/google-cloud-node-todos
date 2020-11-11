@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "google-cloud-node-todos": "*",
-    "@google-cloud/datastore": "^0.8.0",
-    "inquirer": "^0.8.0"
+    "@google-cloud/datastore": "0.8.0",
+    "inquirer": "0.8.5"
   }
 }
