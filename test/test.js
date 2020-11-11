@@ -14,11 +14,11 @@
 
 const { describe, it } = require('mocha');
 const todomvcApi = require('todomvc-api');
-const { api } = require('../server');
+const { api, port } = require('../server');
 
 describe(__filename, () => {
   it('should validate the server', (done) => {
-    const server = api.listen(8080, function () {
+    const server = api.listen(port, function () {
       todomvcApi.validate(function (err, stats) {
         server.close(function () {
           if (stats && (stats.errors || stats.failures)) {
