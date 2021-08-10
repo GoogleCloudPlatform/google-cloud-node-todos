@@ -2,7 +2,11 @@
   "name": "google-cloud-node-todos",
   "description": "TodoMVC sample for google-cloud-node",
   "version": "0.2.0",
+  "private": "true",
   "license": "Apache-2.0",
+  "bin": {
+    "datastore-todos": "cli.js"
+  },
   "dependencies": {
     "@google-cloud/datastore": "^6.3.0",
     "body-parser": "^1.19.0",
@@ -11,6 +15,7 @@
     "todomvc-api": "^0.2.1"
   },
   "devDependencies": {
+    "inquirer": "^0.12.0",
     "mocha": "^8.2.1",
     "semistandard": "^16.0.0"
   },
