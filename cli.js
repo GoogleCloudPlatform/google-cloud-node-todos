@@ -18,7 +18,7 @@
 
 'use strict';
 
-const todos = require('../todos.js');
+const todos = require('./todos.js');
 
 const inquirer = require('inquirer');
 const actions = {

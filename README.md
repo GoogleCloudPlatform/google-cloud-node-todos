@@ -1,8 +1,6 @@
 # google-cloud-node-todos
 > [TodoMVC](http://todomvc.com) backend using [google-cloud-node](//github.com/GoogleCloudPlatform/google-cloud-node).
 
-[![Build Status](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos.svg?branch=master)](https://travis-ci.org/GoogleCloudPlatform/gcloud-node-todos)
-
 ## Prerequisites
 
 1. Create a new cloud project on [console.developers.google.com](http://console.developers.google.com)
@@ -72,7 +70,15 @@ $ gcloud app deploy
 $ curl -X GET http://$PROJECT_ID.appspot.com
 ```
 
+## Command Line
+This sample can also be run from the command line:
+
+```sh
+$ npm link
+$ datastore-todos
+```
+
 ## Resources
 
-- [Command Line Example](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/master/cli)
+- [Command Line Example](//github.com/GoogleCloudPlatform/gcloud-node-todos/tree/main/cli)
 - [Node.js on the Google Cloud Platform](//cloud.google.com/solutions/nodejs)

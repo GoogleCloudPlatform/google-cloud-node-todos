@@ -3,5 +3,9 @@
     "config:base"
   ],
   "pinVersions": false,
-  "rebaseStalePrs": true
+  "rebaseStalePrs": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "recreateClosed": true
+  }
 }
