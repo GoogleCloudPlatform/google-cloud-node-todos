@@ -13,8 +13,9 @@
 // limitations under the License.
 
 const { describe, it } = require('mocha');
-const todomvcApi = require('todomvc-api');
 const { api, port } = require('../server');
+
+const todomvcApi = require('todomvc-api');
 
 describe(__filename, () => {
   it('should validate the server', (done) => {
