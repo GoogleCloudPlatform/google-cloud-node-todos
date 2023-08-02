@@ -15,7 +15,7 @@
     "todomvc-api": "^0.2.1"
   },
   "devDependencies": {
-    "inquirer": "^0.12.0",
+    "inquirer": "^8.0.0",
     "mocha": "^9.0.0",
     "semistandard": "^16.0.0"
   },
